@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -16,6 +18,11 @@ public class ProductService {
 
     public Page<Product> findAll(int page, int size, Specification<Product> spec) {
         return productRepository.findAll(spec, PageRequest.of(page, size));
+    }
+
+    public Product findByID(Integer id){
+      return   productRepository.getOne(id);
+
     }
 
 
