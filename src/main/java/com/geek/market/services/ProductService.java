@@ -24,6 +24,13 @@ public class ProductService {
       return   productRepository.getOne(id);
 
     }
+    public Optional<Product> findID(Integer id){
+        return productRepository.findById(id);
+    }
+    public void save(Integer id, String titel, int price){
+        Product product = new Product(id,titel,price);
+        productRepository.save(product);
+    }
 
 
 }

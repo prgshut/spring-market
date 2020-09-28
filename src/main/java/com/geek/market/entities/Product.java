@@ -19,6 +19,12 @@ public class Product {
     @Column(name = "price")
     int price;
 
+    public Product(Integer id, String title, int price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
