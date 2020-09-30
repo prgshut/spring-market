@@ -20,8 +20,8 @@ public class ProductService {
         return productRepository.findAll(spec, PageRequest.of(page, size));
     }
 
-    public Product findByID(Integer id){
-      return   productRepository.getOne(id);
+    public Optional<Product> findByID(Integer id){
+      return   productRepository.findById(id);
 
     }
     public Optional<Product> findID(Integer id){
