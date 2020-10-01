@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/products")
 @AllArgsConstructor
 public class MainController {
     private ProductService productService;
 
-    @GetMapping("/products")
+    @GetMapping
     public String productAll(Model model,
                              @RequestParam(defaultValue = "1", name = "p") Integer page,
                              @RequestParam(required = false) Map<String, String> params
@@ -32,15 +33,15 @@ public class MainController {
 
     }
 
-    @GetMapping("/update_product/{id}")
-    public String updateProduct(Model model, @PathVariable Integer id) {
+    @GetMapping("/edit/{id}")
+    public String updateProduct(Model model, @PathVariable Long id) {
         model.addAttribute("product", productService.findID(id).get());
-        return "update_product";
+        return "edit_product";
     }
 
-    @PostMapping("/update_product")
-    public String productAdd(@RequestParam Integer id, @RequestParam String title, @RequestParam int price) {
-        productService.save(id, title, price);
+    @PostMapping("/edit")
+    public String productAdd( @ModelAttribute Product product) {
+        productService.save(product);
         return "redirect:/products";
     }
 
