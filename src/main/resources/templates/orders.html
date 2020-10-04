@@ -16,24 +16,48 @@
 <div class="container">
     <div th:replace="~{navigation :: navigation(Orders)}" />
     <h1>Каталог товаров</h1>
-    <table class="table table-hover">
+    <span th:if="${@cart.items.isEmpty()}">Корзина пуста</span>
+    <table th:if="${!@cart.items.isEmpty()}" class="table table-hover">
         <thead class="thead-dark">
         <tr>
-            <th>ID</th>
-            <th>Клиент</th>
-            <th>Товар</th>
+            <th>Название</th>
+            <th>Количество</th>
             <th>Цена</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="o : ${orders}">
-            <td th:text="${o.id}"/>
-            <td th:text="${o.customer.name}"/>
-            <td th:text="${o.product.title}"/>
-            <td th:text="${o.currentPrice}"/>
+        <tr th:each="oi : ${@cart.items}">
+            <td th:text="${oi.product.title}"/>
+            <td>
+                <span th:text="${oi.quantity}"/>
+
+            </td>
+            <td th:text="${oi.price}"/>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Итого:</td>
+            <td th:text="${@cart.price}"></td>
         </tr>
         </tbody>
     </table>
+    <form method="POST" th:action="@{/orders/add}">
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Заказчик</label>
+                <input th:name="customerName" type="text" class="form-control" placeholder="Заказчик">
+            </div>
+            <div class="col form-group">
+                <label>Номер телефона</label>
+                <input th:name="phoneNumber" type="text" class="form-control" placeholder="Номер телефона">
+            </div>
+            <div class="col form-group">
+                <label>Адрес</label>
+                <input th:name="address" type="text" class="form-control" placeholder="Адрес">
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Оформить</button>
+    </form>
 </div>
 
 </body>

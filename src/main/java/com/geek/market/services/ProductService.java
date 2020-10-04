@@ -20,16 +20,15 @@ public class ProductService {
         return productRepository.findAll(spec, PageRequest.of(page, size));
     }
 
-    public Optional<Product> findByID(Integer id){
+    public Optional<Product> findByID(Long id){
       return   productRepository.findById(id);
 
     }
-    public Optional<Product> findID(Integer id){
-        return productRepository.findById(id);
-    }
-    public void save(Integer id, String titel, int price){
-        Product product = new Product(id,titel,price);
+    public void saveOrUpdate(Product product){
         productRepository.save(product);
+    }
+    public void deleteById(Long id){
+        productRepository.deleteById(id);
     }
 
 

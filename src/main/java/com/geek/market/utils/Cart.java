@@ -1,6 +1,7 @@
 package com.geek.market.utils;
 
 
+import com.geek.market.entities.Order;
 import com.geek.market.entities.OrderItem;
 import com.geek.market.entities.Product;
 import lombok.Data;
@@ -77,11 +78,20 @@ public class Cart {
             }
         }
     }
+    public void addOrder(Order order){
+        for (OrderItem oi:items){
+            oi.setOrder(order);
+        }
+    }
 
     public void recalculate() {
         price = 0;
         for (OrderItem o : items) {
             price += o.getPrice();
         }
+    }
+    public void clear(){
+        items.clear();
+        price=0;
     }
 }

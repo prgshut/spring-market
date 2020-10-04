@@ -23,8 +23,14 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<com.geekbrains.geek.market.entities.OrderItem> items;
+    private List<OrderItem> items;
 
     @Column(name = "price")
     private int price;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "address")
+    private String address;
 }

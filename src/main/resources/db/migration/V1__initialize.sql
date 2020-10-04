@@ -13,7 +13,9 @@ create table products (
 create table orders (
     id                      bigserial primary key,
     customer_id             bigint references customers(id),
-    price                   int
+    price                   int,
+    phone_number            varchar(10),
+    address                 varchar(255)
 );
 
 create table order_items (
