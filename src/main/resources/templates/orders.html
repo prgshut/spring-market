@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
 
-    <title>Каталог товаров</title>
+    <title>Заказы</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -15,49 +15,40 @@
 
 <div class="container">
     <div th:replace="~{navigation :: navigation(Orders)}" />
-    <h1>Каталог товаров</h1>
-    <span th:if="${@cart.items.isEmpty()}">Корзина пуста</span>
-    <table th:if="${!@cart.items.isEmpty()}" class="table table-hover">
+    <h1 th:text="${'Список заказов ' + username}"></h1>
+    <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
-            <th>Название</th>
-            <th>Количество</th>
-            <th>Цена</th>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Имя получателя</th>
+            <th>Номер телефона</th>
+            <th>Адрес</th>
+            <th>Товары</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="oi : ${@cart.items}">
-            <td th:text="${oi.product.title}"/>
-            <td>
-                <span th:text="${oi.quantity}"/>
-
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}"></td>
+            <td th:text="${o.price}"></td>
+            <td th:text="${o.recipientName}"></td>
+            <td th:text="${o.recipientPhone}"></td>
+            <td th:text="${o.recipientAddress}"></td>
+            <td >
+                <table class="table table-hover">
+                    <tr>
+                        <th>Имя</th>
+                        <th>Количество</th>
+                    </tr>
+                    <tr th:each=" oi : ${o.items}">
+                        <td th:text="${oi.product.name}"></td>
+                        <td th:text="${oi.quantity}"></td>
+                    </tr>
+                </table>
             </td>
-            <td th:text="${oi.price}"/>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Итого:</td>
-            <td th:text="${@cart.price}"></td>
         </tr>
         </tbody>
     </table>
-    <form method="POST" th:action="@{/orders/add}">
-        <div class="form-row">
-            <div class="col form-group">
-                <label>Заказчик</label>
-                <input th:name="customerName" type="text" class="form-control" placeholder="Заказчик">
-            </div>
-            <div class="col form-group">
-                <label>Номер телефона</label>
-                <input th:name="phoneNumber" type="text" class="form-control" placeholder="Номер телефона">
-            </div>
-            <div class="col form-group">
-                <label>Адрес</label>
-                <input th:name="address" type="text" class="form-control" placeholder="Адрес">
-            </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Оформить</button>
-    </form>
 </div>
 
 </body>

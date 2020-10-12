@@ -1,56 +1,78 @@
-create table customers (
-    id                      bigserial,
-    name                    varchar(255) not null,
-    primary key (id)
+CREATE TABLE users (
+    id              BIGSERIAL PRIMARY KEY,
+    username        VARCHAR(30) NOT NULL,
+    password        VARCHAR(255) NOT NULL,
+    email           VARCHAR(50) UNIQUE,
+    phone_number    BIGINT,
+    address         VARCHAR(255)
 );
 
-create table products (
-    id                      bigserial primary key,
-    title                   varchar(255),
-    price                   int
+CREATE TABLE roles (
+    id              BIGSERIAL PRIMARY KEY,
+    name            VARCHAR(50) NOT NULL
 );
 
-create table orders (
-    id                      bigserial primary key,
-    customer_id             bigint references customers(id),
-    price                   int,
-    phone_number            varchar(10),
-    address                 varchar(255)
+CREATE TABLE users_roles (
+    user_id         BIGSERIAL NOT NULL,
+    role_id         BIGSERIAL NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
-create table order_items (
-    id                      bigserial primary key,
-    product_id              bigint references products(id),
-    order_id                bigint references orders(id),
-    price                   int,
-    price_per_product       int,
-    quantity                int
+CREATE TABLE products (
+    id      BIGSERIAL PRIMARY KEY,
+    name    VARCHAR(255) NOT NULL,
+    price   NUMERIC NOT NULL
 );
 
-insert into customers (name)
-values
-('Bob'),
-('John'),
-('Jack');
+CREATE TABLE orders (
+    id                      bigserial PRIMARY KEY,
+    user_id                 BIGSERIAL REFERENCES users(id),
+    price                   NUMERIC,
+    recipient_name          VARCHAR(50),
+    recipient_phone         BIGINT,
+    recipient_address       VARCHAR(255)
+);
 
-insert into products (title, price)
-values
-('Bread1', 21),
-('Bread2', 22),
-('Bread3', 23),
-('Bread4', 24),
-('Bread5', 25),
-('Bread6', 26),
-('Bread7', 27),
-('Bread8', 28),
-('Bread9', 29),
-('Bread10', 31),
-('Bread11', 32),
-('Bread12', 33),
-('Bread13', 34),
-('Bread14', 35),
-('Bread15', 36),
-('Bread16', 37),
-('Bread17', 38),
-('Bread18', 39),
-('Bread19', 40);
+CREATE TABLE order_items (
+     id                      bigserial PRIMARY KEY,
+     product_id              BIGINT REFERENCES products(id),
+     order_id                BIGINT REFERENCES orders(id),
+     price                   NUMERIC,
+     price_per_product       NUMERIC,
+     quantity                INT
+);
+
+INSERT INTO products (name, price) VALUES
+('Apple', 5.40),
+('Orange', 12.50),
+('Bread', 5.40),
+('Melon', 15.40),
+('Beef', 200.00),
+('Pork', 190.50),
+('Chicken', 160.20),
+('Coffee', 260.30),
+('Tea', 180.50),
+('Juice', 80.60),
+('Soap-powder', 50.13),
+('Soap', 22.50),
+('Toothpaste', 25.40),
+('Toothbrush', 15.10),
+('T-shirt', 220.00),
+('Shorts', 180.30),
+('Pants', 240.00),
+('Shoes', 260.80),
+('Sneakers', 380.50),
+('Pistol', 1180.20);
+
+INSERT INTO roles (name)
+VALUES
+('ROLE_USER'),
+('ROLE_ADMIN');
+
+INSERT INTO users (username, password, email, phone_number, address)
+VALUES
+('user1', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user1@example.com', '79991234567', 'Earth');
+
+INSERT INTO users_roles(user_id, role_id) VALUES (1, 1);
