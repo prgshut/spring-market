@@ -20,9 +20,14 @@ CREATE TABLE users_roles (
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
+CREATE TABLE product_type(
+    id      BIGSERIAL PRIMARY KEY,
+    type    VARCHAR (255) NOT NULL
+);
 CREATE TABLE products (
     id      BIGSERIAL PRIMARY KEY,
-    name    VARCHAR(255) NOT NULL,
+    TITLE    VARCHAR(255) NOT NULL,
+    type_id BIGSERIAL REFERENCES product_type(id),
     price   NUMERIC NOT NULL
 );
 
@@ -44,27 +49,32 @@ CREATE TABLE order_items (
      quantity                INT
 );
 
-INSERT INTO products (name, price) VALUES
-('Apple', 5.40),
-('Orange', 12.50),
-('Bread', 5.40),
-('Melon', 15.40),
-('Beef', 200.00),
-('Pork', 190.50),
-('Chicken', 160.20),
-('Coffee', 260.30),
-('Tea', 180.50),
-('Juice', 80.60),
-('Soap-powder', 50.13),
-('Soap', 22.50),
-('Toothpaste', 25.40),
-('Toothbrush', 15.10),
-('T-shirt', 220.00),
-('Shorts', 180.30),
-('Pants', 240.00),
-('Shoes', 260.80),
-('Sneakers', 380.50),
-('Pistol', 1180.20);
+INSERT INTO product_type (type) values
+('clothes'),
+('food'),
+('technics');
+
+INSERT INTO products (TITLE,type_id, price) VALUES
+('Apple',1, 5.40),
+('Orange',2, 12.50),
+('Bread',3, 5.40),
+('Melon',2, 15.40),
+('Beef',3, 200.00),
+('Pork',1, 190.50),
+('Chicken',2, 160.20),
+('Coffee',3, 260.30),
+('Tea',1, 180.50),
+('Juice',2, 80.60),
+('Soap-powder',3, 50.13),
+('Soap',1, 22.50),
+('Toothpaste',2, 25.40),
+('Toothbrush',3, 15.10),
+('T-shirt',1, 220.00),
+('Shorts',2, 180.30),
+('Pants',3, 240.00),
+('Shoes',1, 260.80),
+('Sneakers',2, 380.50),
+('Pistol',3, 1180.20);
 
 INSERT INTO roles (name)
 VALUES

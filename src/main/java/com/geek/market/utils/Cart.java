@@ -4,6 +4,8 @@ package com.geek.market.utils;
 import com.geek.market.entities.Order;
 import com.geek.market.entities.OrderItem;
 import com.geek.market.entities.Product;
+import com.geek.market.exceptions.ResourceNotFoundException;
+import com.geek.market.services.ProductService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Scope;
@@ -19,9 +21,9 @@ import java.util.List;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-@NoArgsConstructor
 @Data
 public class Cart {
+    private final ProductService productService;
     private List<OrderItem> items;
     private int price;
 
@@ -30,14 +32,15 @@ public class Cart {
         items = new ArrayList<>();
     }
 
-    public void addOrIncrement(Product p) {
+    public void addOrIncrement(Long productId) {
         for (OrderItem o : items) {
-            if (o.getProduct().getId().equals(p.getId())) {
+            if (o.getProduct().getId().equals(productId)) {
                 o.incrementQuantity();
                 recalculate();
                 return;
             }
         }
+        Product p = productService.findByID(productId).orElseThrow(()->new ResourceNotFoundException("Unable to find product with id: " + productId + " (add to cart)"));
         items.add(new OrderItem(p));
         recalculate();
     }

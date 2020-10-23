@@ -16,6 +16,10 @@ public class Product {
     Long id;
     @Column(name = "title")
     String title;
+
+    @OneToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    ProductType productType;
     @Column(name = "price")
     int price;
 

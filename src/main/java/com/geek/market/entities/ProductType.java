@@ -1,21 +1,20 @@
 package com.geek.market.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "product_type")
 @Data
-@Table(name = "roles")
-public class Role {
+@NoArgsConstructor
+public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    Long id;
+    @Column(name = "type")
+    String type;
 
-    @Column(name = "name")
-    private String name;
-
-    @OneToOne()
-    private Product product;
 }
