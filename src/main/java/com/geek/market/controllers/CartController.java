@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-@Controller
-@RequestMapping("/cart")
-@AllArgsConstructor
+//
+//@Controller
+//@RequestMapping("/cart")
+//@AllArgsConstructor
 public class CartController {
     private ProductService productService;
     private Cart cart;
@@ -34,7 +34,7 @@ public class CartController {
             HttpServletRequest request, HttpServletResponse response
     ) throws IOException {
         Product p = productService.findByID(productId).orElseThrow(() -> new ResourceNotFoundException("Product with id: " + productId + " doesn't exists (add to cart"));
-        cart.addOrIncrement(p);
+        cart.addOrIncrement(productId);
         response.sendRedirect(request.getHeader("referer"));
     }
 
