@@ -20,15 +20,23 @@ public class ProductService {
         return productRepository.findAll(spec, PageRequest.of(page, size));
     }
 
-    public Optional<Product> findByID(Integer id){
-      return   productRepository.findById(id);
-
-    }
-    public Optional<Product> findID(Long id){
+    public Optional<Product> findByID(Long id) {
         return productRepository.findById(id);
     }
     public void save(Product product){
         productRepository.save(product);
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        productRepository.deleteAll();
+    }
+
+    public Product saveOrUpdate(Product product) {
+        return productRepository.save(product);
     }
 
 

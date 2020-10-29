@@ -35,7 +35,7 @@ public class MainController {
 
     @GetMapping("/edit/{id}")
     public String updateProduct(Model model, @PathVariable Long id) {
-        model.addAttribute("product", productService.findID(id).get());
+        model.addAttribute("product", productService.findByID(id));
         return "edit_product";
     }
 

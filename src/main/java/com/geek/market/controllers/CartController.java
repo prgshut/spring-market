@@ -30,7 +30,7 @@ public class CartController {
 
     @GetMapping("/add/{product_id}")
     public void addToCart(
-            @PathVariable(name = "product_id") Integer productId,
+            @PathVariable(name = "product_id") Long productId,
             HttpServletRequest request, HttpServletResponse response
     ) throws IOException {
         Product p = productService.findByID(productId).orElseThrow(() -> new ResourceNotFoundException("Product with id: " + productId + " doesn't exists (add to cart"));
