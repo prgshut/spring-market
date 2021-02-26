@@ -20,5 +20,17 @@ public class Student {
     @Column(name = "age")
     private int age;
 
+    public Student( String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
