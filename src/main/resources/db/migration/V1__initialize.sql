@@ -52,3 +52,21 @@ values
 ('Bread17', 38),
 ('Bread18', 39),
 ('Bread19', 40);
+
+create table student  (
+                             id                         bigserial primary key,
+                             name                       varchar(255),
+                             age                        int
+);
+
+insert into student (name, age)
+values
+('Ivanov', 21),
+('Stepanov', 22),
+('Petrov', 23),
+('Marcov', 24),
+('Simonov', 25),
+('Grena', 26),
+('Job', 27),
+('Jon', 28),
+('Den', 29);
